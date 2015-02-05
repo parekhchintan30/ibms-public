@@ -18,7 +18,7 @@
 |
 */
 
-require __DIR__.'/../../vims-code/bootstrap/autoload.php';
+require __DIR__.'/../bootstrap/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ require __DIR__.'/../../vims-code/bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../../vims-code/bootstrap/start.php';
+$app = require_once __DIR__.'/../bootstrap/start.php';
 
 /*
 |--------------------------------------------------------------------------
