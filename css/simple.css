@@ -192,5 +192,8 @@ cursor: pointer;
   background-color:transparent;
   padding:0;
 }
+.pull-center{
+  text-align: center;
+}
 
 
