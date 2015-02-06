@@ -257,6 +257,37 @@ function copyInwardsContent(){
 	}	
 }
 
+function copyOrdersContent(event){
+	var design = $("#element-1 .design").text();
+	if(design == "" || design == null){
+		$("#designs-feedback").show().delay(5000).fadeOut();
+		$("#designs-feedback").html("You need to select atleast one design to process your order");
+		return false;
+	} 
+	var i = 1;
+	while(design!="" && design!=null)
+	{			
+		var color = $("#element-"+i+" .color");
+		var size = $("#element-"+i+" .size");
+		var quantity = $("#element-"+i+" .quantity");
+		var billing_amount = $("#element-"+i+" .billing_amount");
+		if(highlightIfEmpty(color) && highlightIfEmpty(size) && highlightIfEmpty(billing_amount) && highlightIfEmpty(quantity)){
+		$("#designs").val($("#designs").val() + "" + design + ";");
+		$("#colors").val($("#colors").val() + "" + color.text() + ";");
+		$("#sizes").val($("#sizes").val() + "" + size.text() + ";");
+		$("#billing_amounts").val($("#billing_amounts").val() + "" + billing_amount.text() + ";");
+		$("#quantities").val($("#quantities").val() + "" + quantity.text() + ";");
+		}
+		else{
+			event.preventDefault();
+			return false;
+		}
+		i++;	
+		design = $("#element-"+i+" .design").text();
+	}
+	return true;	
+}
+
 
  function printBarcodes() {
  	alert("Printing");
