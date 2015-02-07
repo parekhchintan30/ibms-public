@@ -179,7 +179,8 @@ function copySalesContent() {
 	calculateTotal();
 	var i = 1;
 	if(barcode == "" || barcode == null){
-		alert("Barcode cannot be empty");
+		$("#error-feedback").show().delay(5000).fadeOut();
+		$("#error-feedback").html("You need to scan atleast one barcode to process your order");
 		return false;
 	} 
 	while(barcode!="" && barcode!=null)
@@ -198,9 +199,9 @@ function copySalesContent() {
 		    $("#billing_amounts").val($("#billing_amounts").val()+ "" + mrp.text()+ ";");
 		}
 		else{
-				alert("error");
-				event.preventDefault();
-				return false;
+		$("#error-feedback").show().delay(5000).fadeOut();
+		$("#error-feedback").html("We are sorry but you have not scanned your barcodes properly. <br /> Please try again...");
+		return false;
 		}		
 		i++;	
 
@@ -320,7 +321,7 @@ function copyOrdersContent(event){
 	 // qz-print counts this many `EndOfDocument`'s, a new print job will 
 	 // automatically be spooled to the printer and counting will start
 	 // over.
-	 qz.setDocumentsPerSpool("10");      
+	 qz.setDocumentsPerSpool("1");      
 	 qz.print();
 //	 monitorPrinting(qz);
 }
