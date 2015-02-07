@@ -321,7 +321,7 @@ function copyOrdersContent(event){
 	 // qz-print counts this many `EndOfDocument`'s, a new print job will 
 	 // automatically be spooled to the printer and counting will start
 	 // over.
-	 qz.setDocumentsPerSpool("1");      
+	 qz.setDocumentsPerSpool("20");      
 	 qz.print();
 //	 monitorPrinting(qz);
 }
