@@ -6,6 +6,7 @@ return function(callback, ms){
   };
 })(); 
 var odd = 0;
+var total_print_documents = 0;
 var finished = true;
 var selectedSubOrders = new Array;	
 jQuery(function($) {
@@ -291,7 +292,7 @@ function copyOrdersContent(event){
 
 
  function printBarcodes() {
- 	alert("Printing");
+ 	//alert("Printing");
  	var date = new Date();
 	var date_string = date.getDate() + "." + parseInt(parseInt(date.getMonth())+1) + "." + date.getFullYear();
 	var   totalBarcodes = 0;
@@ -301,13 +302,18 @@ function copyOrdersContent(event){
 	qz.append("q1218\n");
 	qz.append("Q303,26\n");
 	qz.append('TDdd me y4\n'); 
-		
+	var c = 0;	
 	$.each( print, function( key, value ) {
 		pB(key,value,date_string);
+		c++;
 	});
   	if(odd){
+  	//alert("Inside odd");	
      qz.append('\nP1,1\n');
-     qz.append('END');
+     c++;
+     odd = 0;
+      qz.append('END');
+      total_print_documents++;
     // alert("appending odd");
   	}else{
   	//	alert("not appending");
@@ -321,7 +327,10 @@ function copyOrdersContent(event){
 	 // qz-print counts this many `EndOfDocument`'s, a new print job will 
 	 // automatically be spooled to the printer and counting will start
 	 // over.
-	 qz.setDocumentsPerSpool("20");      
+	 qz.setDocumentsPerSpool("20");  
+	 //alert("Printing: "+c);  
+	 //alert("Total Documents: "+total_print_documents);
+	 total_print_documents = 0;    
 	 qz.print();
 //	 monitorPrinting(qz);
 }
@@ -350,6 +359,7 @@ function pB(key, value, date_string){
     qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
     qz.append('\nP1,1\n');
     qz.append('END');
+    total_print_documents++;
     odd=0;
     quantity--;
     }
@@ -387,6 +397,7 @@ function pB(key, value, date_string){
         qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
         qz.append('\nP'+set+',1\n');
         qz.append('END');
+        total_print_documents++;
       }
 
       
