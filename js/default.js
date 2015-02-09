@@ -6,6 +6,7 @@ return function(callback, ms){
   };
 })(); 
 var odd = 0;
+var total_print_documents = 0;
 var finished = true;
 var selectedSubOrders = new Array;	
 jQuery(function($) {
@@ -291,7 +292,7 @@ function copyOrdersContent(event){
 
 
  function printBarcodes() {
- 	alert("Printing");
+ 	//alert("Printing");
  	var date = new Date();
 	var date_string = date.getDate() + "." + parseInt(parseInt(date.getMonth())+1) + "." + date.getFullYear();
 	var   totalBarcodes = 0;
@@ -301,13 +302,18 @@ function copyOrdersContent(event){
 	qz.append("q1218\n");
 	qz.append("Q303,26\n");
 	qz.append('TDdd me y4\n'); 
-		
+	var c = 0;	
 	$.each( print, function( key, value ) {
 		pB(key,value,date_string);
+		c++;
 	});
   	if(odd){
-     qz.append('\nP1,1\n\n');
-    // qz.append('END');
+  	//alert("Inside odd");	
+     qz.append('\nP1,1\n');
+     c++;
+     odd = 0;
+      qz.append('END');
+      total_print_documents++;
     // alert("appending odd");
   	}else{
   	//	alert("not appending");
@@ -315,13 +321,16 @@ function copyOrdersContent(event){
 	 // Mark the end of a label, in this case  P1 plus a newline character
 	 // qz-printknows to look for this and treat this as the end of a "page"
 	 // for better control of larger spooled jobs (i.e. 50+ labels)
-	 qz.setEndOfDocument(",1\n\n");
+	 qz.setEndOfDocument("END");
 	   
 	 // The amount of labels to spool to the printer at a time. When
 	 // qz-print counts this many `EndOfDocument`'s, a new print job will 
 	 // automatically be spooled to the printer and counting will start
 	 // over.
-	 qz.setDocumentsPerSpool("20");      
+	 qz.setDocumentsPerSpool("20");  
+	 //alert("Printing: "+c);  
+	 //alert("Total Documents: "+total_print_documents);
+	 total_print_documents = 0;    
 	 qz.print();
 //	 monitorPrinting(qz);
 }
@@ -348,8 +357,9 @@ function pB(key, value, date_string){
     qz.append('A325,210,0,3,1,1,N,"M.R.P. Rs. '+mrp+'"\n');
     qz.append('A325,232,0,2,1,1,N,"(Inclu. of all taxes)"\n');
     qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
-    qz.append('\nP1,1\n\n');
-    //qz.append('END');
+    qz.append('\nP1,1\n');
+    qz.append('END');
+    total_print_documents++;
     odd=0;
     quantity--;
     }
@@ -385,8 +395,9 @@ function pB(key, value, date_string){
         
         qz.append('A0,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
         qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
-        qz.append('\nP'+set+',1\n\n');
-        //qz.append('END');
+        qz.append('\nP'+set+',1\n');
+        qz.append('END');
+        total_print_documents++;
       }
 
       
