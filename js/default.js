@@ -306,8 +306,8 @@ function copyOrdersContent(event){
 		pB(key,value,date_string);
 	});
   	if(odd){
-     qz.append('\nP1,1\n');
-     qz.append('END');
+     qz.append('\nP1,1\n\n');
+    // qz.append('END');
     // alert("appending odd");
   	}else{
   	//	alert("not appending");
@@ -315,7 +315,7 @@ function copyOrdersContent(event){
 	 // Mark the end of a label, in this case  P1 plus a newline character
 	 // qz-printknows to look for this and treat this as the end of a "page"
 	 // for better control of larger spooled jobs (i.e. 50+ labels)
-	 qz.setEndOfDocument("END");
+	 qz.setEndOfDocument(",1\n\n");
 	   
 	 // The amount of labels to spool to the printer at a time. When
 	 // qz-print counts this many `EndOfDocument`'s, a new print job will 
@@ -348,8 +348,8 @@ function pB(key, value, date_string){
     qz.append('A325,210,0,3,1,1,N,"M.R.P. Rs. '+mrp+'"\n');
     qz.append('A325,232,0,2,1,1,N,"(Inclu. of all taxes)"\n');
     qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
-    qz.append('\nP1,1\n');
-    qz.append('END');
+    qz.append('\nP1,1\n\n');
+    //qz.append('END');
     odd=0;
     quantity--;
     }
@@ -385,8 +385,8 @@ function pB(key, value, date_string){
         
         qz.append('A0,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
         qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
-        qz.append('\nP'+set+',1\n');
-        qz.append('END');
+        qz.append('\nP'+set+',1\n\n');
+        //qz.append('END');
       }
 
       
