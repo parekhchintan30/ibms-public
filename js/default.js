@@ -7,6 +7,7 @@ return function(callback, ms){
 })(); 
 var odd = 0;
 var total_print_documents = 0;
+var total_barcodes_printed = 0;
 var finished = true;
 var selectedSubOrders = new Array;	
 jQuery(function($) {
@@ -32,6 +33,10 @@ $('#from').datetimepicker(
      minDate:min
 });
 */
+$('.datetimepicker').datetimepicker(
+{
+    // defaultDate: to
+});
 $('.from-datetimepicker').datetimepicker(
 {
      defaultDate: from
@@ -312,8 +317,8 @@ function copyOrdersContent(event){
      qz.append('\nP1,1\n');
      c++;
      odd = 0;
-      qz.append('END');
-      total_print_documents++;
+     // qz.append('END');
+     total_print_documents++;
     // alert("appending odd");
   	}else{
   	//	alert("not appending");
@@ -321,17 +326,25 @@ function copyOrdersContent(event){
 	 // Mark the end of a label, in this case  P1 plus a newline character
 	 // qz-printknows to look for this and treat this as the end of a "page"
 	 // for better control of larger spooled jobs (i.e. 50+ labels)
-	 qz.setEndOfDocument("END");
+	 qz.setEndOfDocument(",1\n");
 	   
 	 // The amount of labels to spool to the printer at a time. When
 	 // qz-print counts this many `EndOfDocument`'s, a new print job will 
 	 // automatically be spooled to the printer and counting will start
 	 // over.
-	 qz.setDocumentsPerSpool("20");  
+	 qz.setDocumentsPerSpool("10");  
 	 //alert("Printing: "+c);  
 	 //alert("Total Documents: "+total_print_documents);
-	 total_print_documents = 0;    
-	 qz.print();
+	//alert("Total Barcodes: "+total_barcodes_printed);
+	 
+	var r = confirm("Are you sure you want to print "+total_barcodes_printed + " barcodes");
+    if (r == true) {
+       qz.print();
+    }
+
+	 total_print_documents = 0;   
+	 total_barcodes_printed= 0; 
+	 
 //	 monitorPrinting(qz);
 }
 
@@ -358,10 +371,12 @@ function pB(key, value, date_string){
     qz.append('A325,232,0,2,1,1,N,"(Inclu. of all taxes)"\n');
     qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
     qz.append('\nP1,1\n');
-    qz.append('END');
+    //qz.append('END');
+    total_barcodes_printed++;
     total_print_documents++;
     odd=0;
     quantity--;
+
     }
     if(quantity>0){
       var v = Math.floor(quantity/2);
@@ -396,7 +411,10 @@ function pB(key, value, date_string){
         qz.append('A0,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
         qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
         qz.append('\nP'+set+',1\n');
-        qz.append('END');
+        total_barcodes_printed += set*2;
+        
+        
+        //qz.append('END');
         total_print_documents++;
       }
 
@@ -413,6 +431,9 @@ function pB(key, value, date_string){
         qz.append('A0,210,0,3,1,1,N,"M.R.P. Rs. '+mrp+'"\n');
         qz.append('A0,232,0,2,1,1,N,"(Inclu. of all taxes)"\n');
         qz.append('A0,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
+
+        
+        total_barcodes_printed++;
         odd = 1;
         remaining = 0;
       }
@@ -523,5 +544,11 @@ function organizePagination(pages,page){
           $('.pagination:last').empty();
           $('.pagination:last').append(paginationRows);
           }
+}
+
+// Gets the current url's path, such as http://site.com/example/dist/
+function getPath() {
+          var path = window.location.href;
+          return path.substring(0, path.lastIndexOf("/")) + "/";
 }
 
