@@ -33,10 +33,7 @@ $('#from').datetimepicker(
      minDate:min
 });
 */
-$('.datetimepicker').datetimepicker(
-{
-    // defaultDate: to
-});
+
 $('.from-datetimepicker').datetimepicker(
 {
      defaultDate: from
@@ -45,6 +42,10 @@ $('.to-datetimepicker').datetimepicker(
 {
      defaultDate: to
 });
+
+$('.default-datetimepicker').datetimepicker();
+
+
 
 $('#unstitched').change(function() {
 calculateTotal();
