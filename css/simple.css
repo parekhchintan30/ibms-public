@@ -201,7 +201,6 @@ text-align: center;
 
     .onoffswitch {
     position: relative; width: 54px;
-    margin-left: 30%;
     -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
     }
     .onoffswitch-checkbox {
@@ -245,4 +244,71 @@ text-align: center;
     }
     .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
+    }
+    .tagsinput{
+      border: 0;
+      border-width: 0;
+      
+      -webkit-appearance: none;
+    }
+    .models{
+      border: 1px solid black;
+      margin-top: 10%;
+    }
+
+    .model{
+      width: 100%;
+      padding: 2%;
+    }
+    .header{
+      width: 100%;
+    }
+    .header .name{
+      float:left;
+      text-align: center;
+      width: 25%;
+    }
+     .header .automation{
+      float:left;
+      text-align: center;
+      width: 25%;
+    }
+     .header .last_update{
+      float:left;
+      text-align: center;
+      width: 25%;
+    }
+    .header .update{
+      float:left;
+      text-align: center;
+      width: 25%;
+    }
+    .model .content{
+      max-height: 400px;
+      overflow: auto;
+      display: none;
+    }
+    .client-modal-body{
+      width: 98%;
+      min-height: 400px;
+      max-height: 400px;
+      height: 400px;
+      text-align: center;
+      margin-left: 1%;
+      overflow: auto;
+    }
+    .client-modal-body table tbody{
+      height: 350px;
+    }
+    .selectable:hover{
+      cursor: pointer;
+    }
+    .selected{
+      background-color: #F5F5F5;
+    }
+    .selected td{
+      background-color: #F5F5F5;
+    }
+    .selected:hover{
+      cursor: pointer;
     }

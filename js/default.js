@@ -45,6 +45,7 @@ $('.to-datetimepicker').datetimepicker(
 
 $('.default-datetimepicker').datetimepicker();
 
+$('.datetimepicker').datetimepicker();
 
 
 $('#unstitched').change(function() {
@@ -179,6 +180,7 @@ function calculateTotal(){
 	
 
 }
+
 
 
 function copySalesContent() {
