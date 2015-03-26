@@ -297,7 +297,7 @@ function copyInwardsContent(){
 		i++;	
 		design = $("#element-"+i+" .design").text();
 	}	
-	return false;
+	return true;
 }
 
 function copyOrdersContent(event){
