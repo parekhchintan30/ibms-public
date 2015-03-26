@@ -108,6 +108,18 @@ function highlightIfEmpty(element){
 		}
 }
 
+function highlightIfEmpty2(element){
+	if(element.val() == "" || element.val() == null)
+		{
+			element.focus();
+			//element.style("border-color:red")
+			return false;
+		}	
+		else{
+			return true;
+		}
+}
+
 function calculateTotal(){
 	var barcode = $("#element-1 .barcode").val();
 	var i = 1;
@@ -225,26 +237,45 @@ function copyWorkersContent(){
 
 	var design = $("#element-1 .design").text();
 	var i = 1;
+	if(design == "" || design == null){
+		$("#error-feedback").show().delay(5000).fadeOut();
+		$("#error-feedback").html("You need to insert atleast one design to proceed");
+		return false;
+	}
+
 	while(design!="" && design!=null)
 	{			
 		var billing_amount = $("#element-"+i+" .billing_amount");
 		if(highlightIfEmpty(billing_amount)){
+		if($.isNumeric(billing_amount.text())){ 	
 		$("#designs").val($("#designs").val() + "" + design + ";");
 		$("#billing_amounts").val($("#billing_amounts").val() + "" + billing_amount.text() + ";");
+		}else{
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Billing amount should be numeric on line "+i+ " to process");
+			return false;
+		}
 		}
 		else{
-				event.preventDefault();
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Please add the billing amount on line "+i+ " to process");
 			return false;
 		}
 		i++;	
 		design = $("#element-"+i+" .design").text();
 	}	
+	return true;
 }
 
 
 function copyInwardsContent(){
 	var design = $("#element-1 .design").text();
 	var i = 1;
+	if(design == "" || design == null){
+		$("#error-feedback").show().delay(5000).fadeOut();
+		$("#error-feedback").html("You need to insert atleast one design to proceed");
+		return false;
+	}
 	while(design!="" && design!=null)
 	{			
 		var color = $("#element-"+i+" .color");
@@ -259,12 +290,14 @@ function copyInwardsContent(){
 		$("#quantities").val($("#quantities").val() + "" + quantity.text() + ";");
 		}
 		else{
-			event.preventDefault();
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Please fill in all the details on line "+i+ " to process");
 			return false;
 		}
 		i++;	
 		design = $("#element-"+i+" .design").text();
 	}	
+	return false;
 }
 
 function copyOrdersContent(event){
