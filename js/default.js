@@ -45,6 +45,7 @@ $('.to-datetimepicker').datetimepicker(
 
 $('.default-datetimepicker').datetimepicker();
 
+$('.datetimepicker').datetimepicker();
 
 
 $('#unstitched').change(function() {
@@ -97,6 +98,18 @@ $(".barcodeScanner").scroll(function(){
 
 function highlightIfEmpty(element){
 	if(element.text() == "" || element.text() == null)
+		{
+			element.focus();
+			//element.style("border-color:red")
+			return false;
+		}	
+		else{
+			return true;
+		}
+}
+
+function highlightIfEmpty2(element){
+	if(element.val() == "" || element.val() == null)
 		{
 			element.focus();
 			//element.style("border-color:red")
@@ -181,6 +194,7 @@ function calculateTotal(){
 }
 
 
+
 function copySalesContent() {
 	var barcode = $("#element-1 .barcode").val();
 	calculateTotal();
@@ -223,33 +237,58 @@ function copyWorkersContent(){
 
 	var design = $("#element-1 .design").text();
 	var i = 1;
+	if(design == "" || design == null){
+		$("#error-feedback").show().delay(5000).fadeOut();
+		$("#error-feedback").html("You need to insert atleast one design to proceed");
+		return false;
+	}
+
 	while(design!="" && design!=null)
 	{			
 		var billing_amount = $("#element-"+i+" .billing_amount");
 		if(highlightIfEmpty(billing_amount)){
+		if($.isNumeric(billing_amount.text())){ 	
 		$("#designs").val($("#designs").val() + "" + design + ";");
 		$("#billing_amounts").val($("#billing_amounts").val() + "" + billing_amount.text() + ";");
+		}else{
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Billing amount should be numeric on line "+i+ " to process");
+			return false;
+		}
 		}
 		else{
-				event.preventDefault();
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Please add the billing amount on line "+i+ " to process");
 			return false;
 		}
 		i++;	
 		design = $("#element-"+i+" .design").text();
 	}	
+	return true;
 }
 
 
 function copyInwardsContent(){
 	var design = $("#element-1 .design").text();
 	var i = 1;
+	if(design == "" || design == null){
+		$("#error-feedback").show().delay(5000).fadeOut();
+		$("#error-feedback").html("You need to insert atleast one design to proceed");
+		return false;
+	}
 	while(design!="" && design!=null)
 	{			
+		var default_size_array = ["30","32","34","36","38","40","42","44","46","48","50","52"];
 		var color = $("#element-"+i+" .color");
 		var size = $("#element-"+i+" .size");
 		var quantity = $("#element-"+i+" .quantity");
 		var billing_amount = $("#element-"+i+" .billing_amount");
 		if(highlightIfEmpty(color) && highlightIfEmpty(size) && highlightIfEmpty(billing_amount) && highlightIfEmpty(quantity)){
+		if(default_size_array.indexOf(size.text()) < 0){
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Please fill in a valid size on line "+i+ " to process");
+			return false;
+		}
 		$("#designs").val($("#designs").val() + "" + design + ";");
 		$("#colors").val($("#colors").val() + "" + color.text() + ";");
 		$("#sizes").val($("#sizes").val() + "" + size.text() + ";");
@@ -257,12 +296,14 @@ function copyInwardsContent(){
 		$("#quantities").val($("#quantities").val() + "" + quantity.text() + ";");
 		}
 		else{
-			event.preventDefault();
+			$("#error-feedback").show().delay(5000).fadeOut();
+			$("#error-feedback").html("Please fill in all the details on line "+i+ " to process");
 			return false;
 		}
 		i++;	
 		design = $("#element-"+i+" .design").text();
 	}	
+	return true;
 }
 
 function copyOrdersContent(event){
@@ -552,3 +593,28 @@ function getPath() {
           var path = window.location.href;
           return path.substring(0, path.lastIndexOf("/")) + "/";
 }
+
+    function tableNavigate(e) {
+    	var curr_tr_2 = $("#tblDataBodyN").find("tr.warning").first();
+		if (e.keyCode == 40) { //down
+            if (curr_tr_2.length == 0) {
+                curr_tr_2 = $("#tblDataBodyN").find("tr").first();
+            } else {
+                curr_tr_2.removeClass("warning");
+                curr_tr_2 = curr_tr_2.next("tr");
+            }
+            curr_tr_2.addClass("warning");
+		  } else if (e.keyCode == 38) { //up
+            if (curr_tr_2.length == 0) {
+                curr_tr_2 = $("#tblDataBodyN").find("tr").last();
+            } else {
+                curr_tr_2.removeClass("warning");
+                curr_tr_2 = curr_tr_2.prev("tr");
+            }
+            curr_tr_2.addClass("warning");
+        } else if (e.keyCode == 13) { //enter
+            $(curr_tr_2).click();
+            return false;
+        }
+    }
+
