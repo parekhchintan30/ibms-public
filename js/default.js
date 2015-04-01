@@ -278,7 +278,7 @@ function copyInwardsContent(){
 	}
 	while(design!="" && design!=null)
 	{			
-		var default_size_array = ["30","32","34","36","38","40","42","44","46","48","50","52"];
+		var default_size_array = ["30","32","34","36","38","40","42","44","46","48","50","52","54","56","58","L","XL","M"];
 		var color = $("#element-"+i+" .color");
 		var size = $("#element-"+i+" .size");
 		var quantity = $("#element-"+i+" .quantity");
