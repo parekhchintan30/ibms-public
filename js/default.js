@@ -493,17 +493,17 @@ function pB(key, value, date_string){
 	var totalBarcodes = 0;
 	var subTotal = 0;
 	var print = print_array;
-	qz.append("N\n");
+	qz_tags.append("N\n");
 	//qz.append("q319.6844\n");
 	//qz.append("Q719.229\n");
-	qz.append('TDdd me y4\n'); 
+	qz_tags.append('TDdd me y4\n'); 
 	var c = 0;	
 	$.each( print, function( key, value ) {
 		pB_tags(key,value,date_string);
 		c++;
 	});
-  	qz.setEndOfDocument("P1,1\n");
-	qz.setDocumentsPerSpool("10");  
+  	qz_tags.setEndOfDocument("P1,1\n");
+	qz_tags.setDocumentsPerSpool("10");  
 	var r = confirm("Are you sure you want to print "+total_barcodes_printed + " barcodes");
     if (r == true) {
        qz.print();
@@ -523,21 +523,21 @@ function pB_tags(key, value, date_string){
  	var worker_id= value['worker_id'];
  	var unique_code = "Vamas "+ category + "-" + design + "-" + color + "-" + size + "-" +worker_id;
  	for(i=0;i<quantity;i++){
- 		qz.append('\nN\n');  
- 		qz.append('A15,50,0,1,1,1,N,"'+unique_code.toLowerCase()+'"\n');
- 		qz.append('B35,80,0,1A,2,2,60,B,"'+key+'"\n');
- 		qz.append('A15,170,0,3,1,1,N,"'+identifier+'"\n');
- 		qz.append('A15,220,0,3,1,1,N,"Design - '+design+'"\n');
- 		qz.append('A15,270,0,3,1,1,N,"Color - '+color+'"\n');
- 		qz.append('A15,320,0,3,1,1,N,"Size - '+size+'"\n');
- 		qz.append('A15,370,0,2,1,1,N,"Maximum Retail Price (MRP)"\n');
- 		qz.append('A15,400,0,5,1,1,N,"Rs. '+mrp+' /-"\n'); // ₹
- 		qz.append('A15,460,0,2,1,1,N,"(Inclu. of all taxes)"\n');
- 		qz.append('A15,500,0,2,1,1,N,"Pcs 1/ MFD - '+date_string+'"\n');
- 		qz.append('A15,540,0,1,1,1,N,"In case of complaint contact"\n');
- 		qz.append('A15,580,0,1,1,1,N,"Email: complaints@vamas.in/support@vamas.in"\n');
- 		qz.append('A15,620,0,1,1,1,N,"Contact No: 022-25253808"\n');
-        qz.append('\nP1,1\n');
+ 		qz_tags.append('\nN\n');  
+ 		qz_tags.append('A15,50,0,1,1,1,N,"'+unique_code.toLowerCase()+'"\n');
+ 		qz_tags.append('B35,80,0,1A,2,2,60,B,"'+key+'"\n');
+ 		qz_tags.append('A15,170,0,3,1,1,N,"'+identifier+'"\n');
+ 		qz_tags.append('A15,220,0,3,1,1,N,"Design - '+design+'"\n');
+ 		qz_tags.append('A15,270,0,3,1,1,N,"Color - '+color+'"\n');
+ 		qz_tags.append('A15,320,0,3,1,1,N,"Size - '+size+'"\n');
+ 		qz_tags.append('A15,370,0,2,1,1,N,"Maximum Retail Price (MRP)"\n');
+ 		qz_tags.append('A15,400,0,5,1,1,N,"Rs. '+mrp+' /-"\n'); // ₹
+ 		qz_tags.append('A15,460,0,2,1,1,N,"(Inclu. of all taxes)"\n');
+ 		qz_tags.append('A15,500,0,2,1,1,N,"Pcs 1/ MFD - '+date_string+'"\n');
+ 		qz_tags.append('A15,540,0,1,1,1,N,"In case of complaint contact"\n');
+ 		qz_tags.append('A15,580,0,1,1,1,N,"Email: complaints@vamas.in/support@vamas.in"\n');
+ 		qz_tags.append('A15,620,0,1,1,1,N,"Contact No: 022-25253808"\n');
+        qz_tags.append('\nP1,1\n');
         total_barcodes_printed++;
 
     }
