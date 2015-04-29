@@ -550,7 +550,7 @@ function pB_tags(key, value, date_string){
 		qz.append('^FO30,595^FDEmail:support@vamas.in^FS');
 		qz.append('^FO80,620^FDwww.vamas.in^FS');
 		qz.append('^XZ');
-		total_barcodes_printed
+		total_barcodes_printed++;
 }
 }
 
