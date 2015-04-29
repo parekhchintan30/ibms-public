@@ -339,7 +339,13 @@ function copyOrdersContent(event){
 
 
  function printBarcodes() {
- 	//alert("Printing");
+ 	if(qz){
+ 		qz.findPrinter('TSC');
+ 	}else{
+ 		qz = document.getElementById('qz');
+ 		qz.findPrinter('TSC');
+ 	}
+
  	var date = new Date();
 	var date_string = date.getDate() + "." + parseInt(parseInt(date.getMonth())+1) + "." + date.getFullYear();
 	var   totalBarcodes = 0;
@@ -391,7 +397,6 @@ function copyOrdersContent(event){
 }
 
 function pB(key, value, date_string){
-	//alert("Odd: "+odd);
 	var quantity = value['quantity'];
 	var design = value['design'];
     var color = value['color'];
@@ -399,11 +404,8 @@ function pB(key, value, date_string){
     var mrp = value['mrp'];
  	var identifier= value['identifier'];
  	var category= value['category'];
-   //	alert("a");
     if(odd){
-   // alert("b");
     qz.append('B325,0,0,1A,2,2,70,B,"'+key+'"\n');
- //   alert("c");
     qz.append('A325,105,0,3,1,1,N,"VAMAS '+category+'"\n');
     qz.append('A325,130,0,4,1,1,N,"'+design+'"\n');
     qz.append('A325,162,0,3,1,1,N,"'+color+'"\n');
@@ -413,12 +415,10 @@ function pB(key, value, date_string){
     qz.append('A325,232,0,2,1,1,N,"(Inclu. of all taxes)"\n');
     qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
     qz.append('\nP1,1\n');
-    //qz.append('END');
     total_barcodes_printed++;
     total_print_documents++;
     odd=0;
     quantity--;
-
     }
     if(quantity>0){
       var v = Math.floor(quantity/2);
@@ -454,9 +454,6 @@ function pB(key, value, date_string){
         qz.append('A325,255,0,1,1,1,N,"Pcs 1 Pkd. Dt: '+date_string+'"\n');
         qz.append('\nP'+set+',1\n');
         total_barcodes_printed += set*2;
-        
-        
-        //qz.append('END');
         total_print_documents++;
       }
 
@@ -480,30 +477,29 @@ function pB(key, value, date_string){
         remaining = 0;
       }
     }
-    	
-    //alert("printing now");
-   // qz.print();
   	
 }
 
 
- function printBarcodes_tags() {
+function printBarcodes_tags() {
+ 	if(qz){
+ 		qz.findPrinter('Zebra');
+ 	}else{
+ 		qz = document.getElementById('qz');
+ 		qz.findPrinter('Zebra');
+ 	}
  	var date = new Date();
 	var date_string = date.getDate() + "." + parseInt(parseInt(date.getMonth())+1) + "." + date.getFullYear();
 	var totalBarcodes = 0;
 	var subTotal = 0;
 	var print = print_array;
-	qz_tags.append("N\n");
-	//qz.append("q319.6844\n");
-	//qz.append("Q719.229\n");
-	qz_tags.append('TDdd me y4\n'); 
 	var c = 0;	
 	$.each( print, function( key, value ) {
 		pB_tags(key,value,date_string);
 		c++;
 	});
-  	qz_tags.setEndOfDocument("P1,1\n");
-	qz_tags.setDocumentsPerSpool("10");  
+  	qz.setEndOfDocument("^XZ");
+	qz.setDocumentsPerSpool("10");  
 	var r = confirm("Are you sure you want to print "+total_barcodes_printed + " barcodes");
     if (r == true) {
        qz.print();
@@ -521,26 +517,41 @@ function pB_tags(key, value, date_string){
  	var identifier= value['identifier'];
  	var category= value['category'];
  	var worker_id= value['worker_id'];
- 	var unique_code = "Vamas "+ category + "-" + design + "-" + color + "-" + size + "-" +worker_id;
+ 	//var unique_code = "Vamas "+ category + "-" + design + "-" + color + "-" + size + "-" +worker_id;
  	for(i=0;i<quantity;i++){
- 		qz_tags.append('\nN\n');  
- 		qz_tags.append('A15,50,0,1,1,1,N,"'+unique_code.toLowerCase()+'"\n');
- 		qz_tags.append('B35,80,0,1A,2,2,60,B,"'+key+'"\n');
- 		qz_tags.append('A15,170,0,3,1,1,N,"'+identifier+'"\n');
- 		qz_tags.append('A15,220,0,3,1,1,N,"Design - '+design+'"\n');
- 		qz_tags.append('A15,270,0,3,1,1,N,"Color - '+color+'"\n');
- 		qz_tags.append('A15,320,0,3,1,1,N,"Size - '+size+'"\n');
- 		qz_tags.append('A15,370,0,2,1,1,N,"Maximum Retail Price (MRP)"\n');
- 		qz_tags.append('A15,400,0,5,1,1,N,"Rs. '+mrp+' /-"\n'); // ₹
- 		qz_tags.append('A15,460,0,2,1,1,N,"(Inclu. of all taxes)"\n');
- 		qz_tags.append('A15,500,0,2,1,1,N,"Pcs 1/ MFD - '+date_string+'"\n');
- 		qz_tags.append('A15,540,0,1,1,1,N,"In case of complaint contact"\n');
- 		qz_tags.append('A15,580,0,1,1,1,N,"Email: complaints@vamas.in/support@vamas.in"\n');
- 		qz_tags.append('A15,620,0,1,1,1,N,"Contact No: 022-25253808"\n');
-        qz_tags.append('\nP1,1\n');
-        total_barcodes_printed++;
-
-    }
+ 		qz.append('^XA^MCY^XZ'); 
+ 		qz.append('^XA');  
+		qz.append('^FX Top section with company logo, name and address.');
+		qz.append('^CF0,60');
+		qz.append('^BY2,2,80');
+		qz.append('^FO45,60^BC^FD'+key+'^FS');
+		qz.append('^FO10,165^GB300,3,3^FS');
+		qz.append('^FX Second section with recipient address and permit information.');
+		qz.append('^CFA,20'); 
+		qz.append('^FO20,190^FDStyle - '+design+'^FS');
+		qz.append('^FO20,220^FDColor - '+color+'^FS');
+		qz.append('^FO20,250^FDSize -  '+size+'^FS');
+		qz.append('^FO20,280^FDType - '+identifier+'^FS');
+		qz.append('^FO20,310^FDQuantity - 1 PC^FS');
+		qz.append('^FO20,340^FDMFD - '+date_string+'^FS');
+		qz.append('^FO10,370^GB300,3,3^FS'); 
+		qz.append('^FX Second section with recipient address and permit information.'); 
+		qz.append('^CFA,40'); 
+		qz.append('^FO20,390^FDRs. '+mrp+' /-^FS'); 
+		qz.append('^FO10,440^GB300,3,3^FS'); 
+		qz.append('^FX Fourth section (the two boxes on the bottom).'); 
+		qz.append('^FO20,460^GB280,180,3^FS'); 
+		qz.append('^CFA,15'); 
+		qz.append('^FO30,470^FDVamas^FS');
+		qz.append('^FO30,495^FD3,Jamuna Bhaiya Chawl,^FS');
+		qz.append('^FO30,520^FDPestom Sagar Road No.3^FS');
+		qz.append('^FO30,545^FDMumbai - 400089^FS');
+		qz.append('^FO30,570^FDContact No:25253808^FS');
+		qz.append('^FO30,595^FDEmail:support@vamas.in^FS');
+		qz.append('^FO80,620^FDwww.vamas.in^FS');
+		qz.append('^XZ');
+		total_barcodes_printed
+}
 }
 
 function monitorPrinting(qz) {
