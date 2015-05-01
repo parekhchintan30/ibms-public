@@ -520,7 +520,7 @@ function pB_tags(key, value, date_string){
  	//var unique_code = "Vamas "+ category + "-" + design + "-" + color + "-" + size + "-" +worker_id;
  	for(i=0;i<quantity;i++){
  		qz.append('^XA^MCY^XZ'); 
- 		qz.append('^XA');  
+		qz.append('^XA');  
 		qz.append('^FX Top section with company logo, name and address.');
 		qz.append('^CF0,60');
 		qz.append('^BY2,2,80');
@@ -537,7 +537,9 @@ function pB_tags(key, value, date_string){
 		qz.append('^FO10,370^GB300,3,3^FS'); 
 		qz.append('^FX Second section with recipient address and permit information.'); 
 		qz.append('^CFA,40'); 
-		qz.append('^FO20,390^FDRs. '+mrp+' /-^FS'); 
+		qz.append('^FO20,390^FDMRP Rs.'+mrp+'/-^FS'); 
+		qz.append('^CFA,13');
+		qz.append('^FO80,430^FD(Inclusive of all taxes)^FS'); 
 		qz.append('^FO10,440^GB300,3,3^FS'); 
 		qz.append('^FX Fourth section (the two boxes on the bottom).'); 
 		qz.append('^FO20,460^GB280,180,3^FS'); 
@@ -550,7 +552,7 @@ function pB_tags(key, value, date_string){
 		qz.append('^FO30,595^FDEmail:support@vamas.in^FS');
 		qz.append('^FO80,620^FDwww.vamas.in^FS');
 		qz.append('^XZ');
-		total_barcodes_printed++;
+        total_barcodes_printed++;
 }
 }
 
