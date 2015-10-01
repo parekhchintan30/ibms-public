@@ -43,9 +43,7 @@ $('.to-datetimepicker').datetimepicker(
      defaultDate: to
 });
 
-$('.default-datetimepicker').datetimepicker();
 
-$('.datetimepicker').datetimepicker();
 
 
 $('#unstitched').change(function() {
@@ -94,7 +92,44 @@ $(".barcodeScanner").scroll(function(){
     });
 
 
+$(".orderScanner").scroll(function(){
+		var divend = $(this)[0].scrollHeight 
+        var pagescroll = $(this).scrollTop() + $(this).height(); 
+		if(divend <= pagescroll)
+              {
+              	var newId = $('.orderScanner table tr:last').data('id') + 1;
+              	var newRow = '<tr id="element-'+ newId +'" data-id="'+newId+'">';
+              	newRow += '<td>'+newId+'</td>';
+			   	newRow += '<td contenteditable="true" class="design"></td>';
+				newRow += '<td contenteditable="true" class="color"></td>';
+				newRow += '<td contenteditable="true" class="size"></td>';
+				newRow += '<td contenteditable="true" class="quantity"></td>';
+              	$('.orderScanner table').append(newRow);
+              }
+    });
+$(".inwardScanner").scroll(function(){
+		var divend = $(this)[0].scrollHeight 
+        var pagescroll = $(this).scrollTop() + $(this).height(); 
+		if(divend <= pagescroll)
+              {
+              	var newId = $('.inwardScanner table tr:last').data('id') + 1;
+              	var newRow = '<tr id="element-'+ newId +'" data-id="'+newId+'">';
+              	newRow += '<td>'+newId+'</td>';
+			   	newRow += '<td contenteditable="true" class="design"></td>';
+				newRow += '<td contenteditable="true" class="color"></td>';
+				newRow += '<td contenteditable="true" class="size"></td>';
+				newRow += '<td contenteditable="true" class="quantity"></td>';
+              	newRow += '<td contenteditable="true" class="billing_amount"></td>';
+              	newRow += '<td contenteditable="true" class="total"></td>';
+              	$('.inwardScanner table').append(newRow);
+              }
 });
+
+
+
+});
+
+
 
 function highlightIfEmpty(element){
 	if(element.text() == "" || element.text() == null)
@@ -144,7 +179,12 @@ function calculateTotal(){
 	}
 
 	var discount = 0;
-	if($('#discount_percentage').length && $('#discount_percentage').val()!=""){
+		if ($('#discount_val').length && $('#discount_val').val() != "") {
+                    discount = parseFloat($('#discount_val').val());
+                    $('#discount').val(discount);
+                    total = parseFloat(total) - parseFloat(discount);
+        }    
+        else if($('#discount_percentage').length && $('#discount_percentage').val()!=""){
 		discount_percentage = $('#discount_percentage').val();
 		discount = parseFloat((total*discount_percentage/100)).toFixed(2);
 		$('#discount_percentage').val(discount_percentage);
@@ -319,12 +359,12 @@ function copyOrdersContent(event){
 		var color = $("#element-"+i+" .color");
 		var size = $("#element-"+i+" .size");
 		var quantity = $("#element-"+i+" .quantity");
-		var billing_amount = $("#element-"+i+" .billing_amount");
-		if(highlightIfEmpty(color) && highlightIfEmpty(size) && highlightIfEmpty(billing_amount) && highlightIfEmpty(quantity)){
+		var note = $("#element-"+i+" .note");
+		if(highlightIfEmpty(color) && highlightIfEmpty(size) && highlightIfEmpty(quantity)){
 		$("#designs").val($("#designs").val() + "" + design + ";");
 		$("#colors").val($("#colors").val() + "" + color.text() + ";");
 		$("#sizes").val($("#sizes").val() + "" + size.text() + ";");
-		$("#billing_amounts").val($("#billing_amounts").val() + "" + billing_amount.text() + ";");
+		$("#notes").val($("#notes").val() + "" + note.text() + ";");
 		$("#quantities").val($("#quantities").val() + "" + quantity.text() + ";");
 		}
 		else{

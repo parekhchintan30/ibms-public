@@ -110,7 +110,7 @@ body {
   border-radius: 50%;
 }
 
-.barcodeScanner{
+.pickerTable{
 	width: 100%;
 	height: 300px;
 	overflow: auto;
@@ -120,12 +120,12 @@ body {
   height: 600px;
 }
 
-.barcodeScanner table{
+.pickerTable table{
 
 	width: 100%;
 
 }
-.barcodeScanner th,th{
+.pickerTable th,th{
 	font-weight: bold;
 	/*
   color: #fff;
@@ -135,7 +135,7 @@ body {
  padding: 0.5%;
   text-align: center;
  }
-.barcodeScanner td{
+.pickerTable td{
 	background-color: white;
 	text-align: center;
 	border: solid #F5F5F5;
