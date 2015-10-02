@@ -104,6 +104,7 @@ $(".orderScanner").scroll(function(){
 				newRow += '<td contenteditable="true" class="color"></td>';
 				newRow += '<td contenteditable="true" class="size"></td>';
 				newRow += '<td contenteditable="true" class="quantity"></td>';
+				newRow += '<td contenteditable="true" class="note"></td>';
               	$('.orderScanner table').append(newRow);
               }
     });
