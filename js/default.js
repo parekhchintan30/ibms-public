@@ -46,9 +46,12 @@ $('.to-datetimepicker').datetimepicker(
 
 
 
-$('#unstitched').change(function() {
+$('#unstitched, #against_h_form').change(function() {
 calculateTotal();
 });
+
+
+
 $('#discount_percentage').keyup(function() {
 calculateTotal();
 });
@@ -194,7 +197,8 @@ function calculateTotal(){
 		total = parseFloat(total) - parseFloat(discount);
 	}	
 	var unstitched = $("#unstitched").val();
-	if($("#unstitched").is(':checked')){
+	var against_h_form = $("#against_h_form").val();
+	if($("#unstitched").is(':checked') || $("#against_h_form").is(':checked')){
 		//do not add any taxes
 		$("#tax").val(0);
 		$("#tax_type").val(null);
