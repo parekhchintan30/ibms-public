@@ -238,9 +238,20 @@ function calculateTotal(){
 
 }
 
+function reinitializeFields(){
+	$("#barcodes").val("");
+	$("#designs").val("");
+   	$("#colors").val("");
+	$("#sizes").val("");
+	$("#billing_amounts").val("");
+	$("#quantities").val("");
+	$("#notes").val("");
 
+
+}
 
 function copySalesContent() {
+	reinitializeFields();
 	var barcode = $("#element-1 .barcode").val();
 	calculateTotal();
 	var i = 1;
@@ -279,7 +290,7 @@ function copySalesContent() {
 
 
 function copyWorkersContent(){
-
+	reinitializeFields();
 	var design = $("#element-1 .design").text();
 	var i = 1;
 	if(design == "" || design == null){
@@ -314,6 +325,7 @@ function copyWorkersContent(){
 
 
 function copyInwardsContent(){
+	reinitializeFields();
 	var design = $("#element-1 .design").text();
 	var i = 1;
 	if(design == "" || design == null){
@@ -352,6 +364,7 @@ function copyInwardsContent(){
 }
 
 function copyOrdersContent(event){
+	reinitializeFields();
 	var design = $("#element-1 .design").text();
 	if(design == "" || design == null){
 		$("#designs-feedback").show().delay(5000).fadeOut();
