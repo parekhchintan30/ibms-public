@@ -335,7 +335,7 @@ function copyInwardsContent(){
 	}
 	while(design!="" && design!=null)
 	{			
-		var default_size_array = ["30","32","34","36","38","40","42","44","46","48","50","52","54","56","58","L","XL","M"];
+		var default_size_array = ["30","32","34","36","38","40","42","44","46","48","50","52","54","56","58","L","XL","XXL","M"];
 		var color = $("#element-"+i+" .color");
 		var size = $("#element-"+i+" .size");
 		var quantity = $("#element-"+i+" .quantity");
@@ -410,7 +410,7 @@ function copyOrdersContent(event){
 	var subTotal = 0;
 	var print = print_array;
 	qz.append("N\n");
-	qz.append("q1218\n");
+	qz.append("q550\n");
 	qz.append("Q303,26\n");
 	qz.append('TDdd me y4\n'); 
 	var c = 0;	
