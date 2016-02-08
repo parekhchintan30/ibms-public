@@ -12,8 +12,23 @@ var finished = true;
 var selectedSubOrders = new Array;	
 jQuery(function($) {
 
+$('.left_accordion').navAccordion({
+                expandButtonText: '',  //Text inside of buttons can be HTML
+                collapseButtonText: ''
+                
+            }, 
+
+            function(){
+                console.log('Callback')
+            });
+
+
 var currentTab = "collapse"+$("#active_tab").val();
+
 $("#"+currentTab).collapse('show');
+
+
+            
 
 	var now = new Date();
 	var from = new Date();
@@ -33,6 +48,8 @@ $('#from').datetimepicker(
      minDate:min
 });
 */
+
+
 
 $('.from-datetimepicker').datetimepicker(
 {
