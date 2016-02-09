@@ -12,34 +12,29 @@ var finished = true;
 var selectedSubOrders = new Array;	
 jQuery(function($) {
 
+/* Initializing Accordion Menu */
+var currentTab = "tab"+$("#active_tab").val();
+$("#"+currentTab).addClass("selected");
 $('.left_accordion').navAccordion({
-                expandButtonText: '',  //Text inside of buttons can be HTML
-                collapseButtonText: ''
-                
-            }, 
-
-            function(){
-                console.log('Callback')
-            });
-
-
-var currentTab = "collapse"+$("#active_tab").val();
-
-$("#"+currentTab).collapse('show');
+expandButtonText: '',  //Text inside of buttons can be HTML
+collapseButtonText: ''
+}, 
+function(){
+console.log('Callback')
+});
+/* End of accordion menu initalization */
 
 
-            
-
-	var now = new Date();
-	var from = new Date();
-	var to = new Date();
-	var max = new Date();
-	var min = new Date();
+var now = new Date();
+var from = new Date();
+var to = new Date();
+var max = new Date();
+var min = new Date();
 
 
-	max.setDate(max.getDate() + 1);
-	min.setDate(min.getDate() + 90);
-	from.setDate(max.getDate() - 7);
+max.setDate(max.getDate() + 1);
+min.setDate(min.getDate() + 90);
+from.setDate(max.getDate() - 7);
 /*
 $('#from').datetimepicker(
 {
