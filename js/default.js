@@ -14,7 +14,11 @@ jQuery(function($) {
 
 /* Initializing Accordion Menu */
 var currentTab = "tab"+$("#active_tab").val();
+
+
 $("#"+currentTab).addClass("selected");
+
+if($(".left_accordion").length > 0){
 $('.left_accordion').navAccordion({
 expandButtonText: '',  //Text inside of buttons can be HTML
 collapseButtonText: ''
@@ -22,6 +26,7 @@ collapseButtonText: ''
 function(){
 console.log('Callback')
 });
+}
 /* End of accordion menu initalization */
 
 
