@@ -13,12 +13,14 @@ var selectedSubOrders = new Array;
 jQuery(function($) {
 
 /* Initializing Accordion Menu */
-var currentTab = "tab"+$("#active_tab").val();
 
 
+var active_tab = $("#active_tab").val();
+var active_tab1 = active_tab.split("-");
+var currentTab = "tab"+ active_tab1[0];
 $("#"+currentTab).addClass("selected");
-
-if($(".left_accordion").length > 0){
+$("#"+active_tab).css("background-color", "#333333");
+if($('.left_accordion').length>0){
 $('.left_accordion').navAccordion({
 expandButtonText: '',  //Text inside of buttons can be HTML
 collapseButtonText: ''
